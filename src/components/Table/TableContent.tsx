@@ -11,13 +11,9 @@ export const TableContent: React.FC<TableContentProps> = ({ isLoading, items }) 
             </>
         )
     }
-    // if (items && items.length === 0) {
-    //     return (
-    //         <>
-    //             <h4>No Result Match</h4>
-    //         </>
-    //     )
-    // }
+    if (items && items.length === 0) {
+        return <h4>No Result</h4>
+    }
     return (
         <>
             {items.map((country: Country, index: number) => <TableItem key={index} country={country} isEven={index % 2 === 1} />)}

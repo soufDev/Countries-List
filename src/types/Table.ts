@@ -3,6 +3,7 @@ import { Country } from './Country';
 export type MouseEventHeadetTitle = React.MouseEvent<HTMLAnchorElement & { title: string }>
 
 export interface TableHeaderProps {
+    currentItem: string;
     titleItems: string[];
     onClick: (e: MouseEventHeadetTitle) => void;
 }
@@ -20,5 +21,6 @@ export interface TableContentProps {
 export interface TableProps {
     countries: Country[];
     isLoading: boolean;
+    currentHeaderItem: string;
     onClickHeaderItem: (e: MouseEventHeadetTitle) => void;
 }

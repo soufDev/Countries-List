@@ -9,4 +9,5 @@ export const theme: ThemeType = {
   greyishLight: '#f4f4f4',
   white: '#fff',
   lightGrey: '#494949',
+  grey: "#bebebe"
 };

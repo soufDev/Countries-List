@@ -5,7 +5,7 @@ import { navigate } from '@reach/router';
 import Router from './components/Router';
 import { Navbar } from './components/Navbar/Navbar';
 import { theme } from './theme';
-import { Provider } from './components/Countries/Context';
+import { InitProvider, Provider } from './components/Countries/Context';
 
 
 const navbarItems = ['home', 'countries'];
@@ -17,10 +17,12 @@ const App: React.FC = () => {
   };
   return (
     <ThemeContext.Provider value={theme}>
-      <Provider>
-        <Navbar initialRoute='home' items={navbarItems} onClickItem={onClickItem}/>
-        <Router />
-      </Provider>
+      <InitProvider>
+        <Provider>
+          <Navbar initialRoute='home' items={navbarItems} onClickItem={onClickItem}/>
+          <Router />
+        </Provider>
+      </InitProvider>
     </ThemeContext.Provider>
   );
 }

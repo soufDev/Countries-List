@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TableHeaderItem = styled.a`
+export const TableHeaderItem = styled.a<{ active: boolean }>`
     display: flex;
     align-items: center;
     width: calc(100% / 6);
@@ -9,7 +9,7 @@ export const TableHeaderItem = styled.a`
     text-decoration: none;
     text-transform: capitalize;
     color: ${({ theme }) => theme.white};
-    background-color: ${({ theme }) => theme.darkGrey};
+    background-color: ${({ theme, active }) => active ? theme.black : theme.darkGrey};
     &:hover {
         cursor: pointer;
         background-color: ${({ theme }) => theme.black};

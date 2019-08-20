@@ -14,7 +14,6 @@ export const Navbar: React.FC<Props> = ({ initialRoute, items, onClickItem }) =>
         setActiveItem(e.currentTarget.textContent);
         onClickItem(e.currentTarget.textContent);
     };
-    console.count('Navbar')
     return (
         <WrapperNavbar>
             {items.map((item, key) => (

@@ -1,46 +1,99 @@
 import React from 'react';
 import { RouteComponentProps } from '@reach/router';
-import { useAsync, PromiseFn } from 'react-async';
 import { MouseEventHeadetTitle } from '../../types/Table';
 import { Table } from '../Table/Table';
-import { useCountryData } from './Context';
-import axios, { AxiosResponse } from 'axios';
-import { Country } from '../../types/Country';
-import { State } from '../../types/useFetch';
-
-// export const fetchData = <T>(url: string): Promise<T> => {
-//     return axios.get<T>(url, {
-//         headers: {
-//             "x-rapidapi-host": "restcountries-v1.p.rapidapi.com",
-// 	        "x-rapidapi-key": "a020cc16ffmsha6c2fd7eb13763dp128656jsn68dd7bd70ea5"
-//         }
-//     }
-//     ).then((response: AxiosResponse<T>) => response.data);
-// };
-
-function fetchData<T>({ url }: { url: string }) {
-    return axios.get(url, {
-            headers: {
-                "x-rapidapi-host": "restcountries-v1.p.rapidapi.com",
-                "x-rapidapi-key": "a020cc16ffmsha6c2fd7eb13763dp128656jsn68dd7bd70ea5"
-            }
-        }).then(({ data }: { data: T }) => data);
-}
+import { useCountryData, useCountryDispatch } from './Context';
+import Pagination from '../Pagination';
+import { sortByProperty, searchByName, filterByCurrency } from '../utils/utils';
+import Input from '../Input';
+import { WrapperCountries, WrapperInputs } from './Countries.styled';
+import RadioGroup from '../RadioGroup';
 
 export const Countries: React.FC<RouteComponentProps> = () => {
-    // const { response: countries, error, isLoading } = useCountryData();
-    const { data = [], error, isLoading } = useAsync<Country[]>({ promiseFn: fetchData as PromiseFn<Country[]>, url: '/all' });
+    const {
+        response: data,
+        countries,
+        isLoading,
+        currentPage,
+        numberOfPages,
+        currentTableItem,
+        ascSort
+    } = useCountryData();
+    const dispatch = useCountryDispatch();
+    
+    const [searchValue, setSearchValue] = React.useState<string>('');
+    const [currency, setCurrency] = React.useState<string>('all');
+
+
+    React.useEffect(() => {
+        dispatch({ type: 'INIT', payload: {
+            data,
+        }});
+    }, [data]);
+
+    const paginationHandler = (value: number) => {
+        dispatch({ type: 'PAGINATE', payload: {
+            pageNumber: value,
+            data: countries,
+        } });
+    };
+
     const headerItemHandler = (e: MouseEventHeadetTitle) => {
         const target = e.target as HTMLAnchorElement & { title: string };
-        console.log({ title: target.title });
+        const sortedCountries = sortByProperty(countries, target.title, ascSort);
+        dispatch({ type: 'SORT', payload: {
+            countries: sortedCountries,
+            headerTableItem: target.title,
+            ascSort,
+        }})
+    };
+
+    const keyPressHandler = (e: React.KeyboardEvent<HTMLInputElement>): void => {
+        if (e.key === 'Enter') {
+            setCurrency('all');
+            dispatch({
+                type: 'SEARCH',
+                payload: {
+                    pageNumber: 1,
+                    data: searchByName(data, searchValue)
+                }
+            })
+        }
     }
-    // const countries = data || [];
-    console.count('countries')
-    console.log({ data, error, isLoading })
-    if (error) {
-        return <h1>Error</h1>
-    } 
+
+    const inputHandler = (e: React.FormEvent<HTMLInputElement>): void => {
+        setSearchValue(e.currentTarget.value);
+    }
+
+    const currencyHandler = (e: React.FormEvent<HTMLInputElement>): void => {
+        setCurrency(e.currentTarget.value);
+        setSearchValue('');
+        dispatch({
+            type: 'SEARCH',
+            payload: {
+                pageNumber: 1,
+                data: filterByCurrency(data, e.currentTarget.value),
+            }
+        })
+    }
     return (
-        <Table isLoading={isLoading} countries={data} onClickHeaderItem={headerItemHandler} />
+        <WrapperCountries>
+            <WrapperInputs>
+                <RadioGroup
+                    value={currency}
+                    items={['all', 'eur']}
+                    onChange={currencyHandler}
+                />
+                <Input
+                    placeHolder="Search By Name.."
+                    onChange={inputHandler}
+                    onKeyPress={keyPressHandler}
+                    value={searchValue}
+                />
+            </WrapperInputs>
+            <Table isLoading={isLoading} countries={countries} onClickHeaderItem={headerItemHandler} currentHeaderItem={currentTableItem} />
+            <Pagination currentPage={currentPage} numberOfPages={numberOfPages} onClick={paginationHandler} />
+        </WrapperCountries>
+
     )
 };

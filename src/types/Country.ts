@@ -2,23 +2,23 @@ import { State as fetchState } from './useFetch';
 
 export interface Country {
     name: string;
-    capital: string;
-    altSpellings: {
+    capital?: string;
+    altSpellings?: {
         items: string[];
     };
-    relevance: string;
+    relevance?: string;
     region: string;
-    subregion: string;
-    translation: string[];
+    subregion?: string;
+    translation?: string[];
     population: number;
-    demonym: string;
+    demonym?: string;
     area: number;
-    gini: number;
-    timezones: string[];
-    callingCodes: string[];
-    topLevelDomain: string[];
-    alpha2Code: string;
-    alpha3Code: string;
+    gini?: number;
+    timezones?: string[];
+    callingCodes?: string[];
+    topLevelDomain?: string[];
+    alpha2Code?: string;
+    alpha3Code?: string;
     currencies: string[];
     languages: string[];
 }

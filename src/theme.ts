@@ -3,9 +3,9 @@ interface ThemeType {
 }
 
 export const theme: ThemeType = {
-  darkGrey: '#333',
+  darkGrey: '#EA6244',
   green: '4CAF50',
-  black: '#111',
+  black: '#D15322',
   greyishLight: '#f4f4f4',
   white: '#fff',
   lightGrey: '#494949',

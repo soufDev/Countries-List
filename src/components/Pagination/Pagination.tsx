@@ -8,7 +8,8 @@ export const Pagination: React.FC<PaginationProps> = React.memo(({ currentPage, 
         onClick(value);
     }
     for (let i = 1; i <= numberOfPages; i += 1) {
-        content.push(<PageItem key={i} active={i === currentPage} onClick={handleClick(i)}>{i}</PageItem>)
+        content.push(
+            <PageItem data-testid="pagination-item" key={i} active={i === currentPage} onClick={handleClick(i)}>{i}</PageItem>)
     }
     return (
         <PaginationWrapper>

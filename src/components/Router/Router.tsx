@@ -1,17 +1,16 @@
 import React from 'react';
 import { StyledRouter } from './Router.styled';
+import { Spinner } from '../Spinner/Spinner';
 
 const Home = React.lazy(() => import('../Home'));
-const Shipments = React.lazy(() => import('../Countries'));
-
-const Loader = () => <h3>loading page...</h3>;
+const Countries = React.lazy(() => import('../Countries'));
 
 export const Router = () => {
   return (
-    <React.Suspense fallback={<Loader />}>
+    <React.Suspense fallback={<Spinner />}>
       <StyledRouter>
         <Home path="/" />
-        <Shipments path="/countries" />
+        <Countries path="/countries" />
       </StyledRouter>
     </React.Suspense>
   );

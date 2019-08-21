@@ -2,17 +2,23 @@ import React from 'react';
 import { TableContentProps } from '../../types/Table';
 import { Country } from '../../types/Country';
 import { TableItem } from './TableItem';
+import { Spinner } from '../Spinner/Spinner';
+import { StyledContent } from './Table.styled';
 
 export const TableContent: React.FC<TableContentProps> = ({ isLoading, items }) => {
     if (isLoading) {
         return (
-            <>
-                <h4>Loadgin ...</h4>
-            </>
+            <StyledContent>
+                <Spinner />
+            </StyledContent>
         )
     }
     if (items && items.length === 0) {
-        return <h4>No Result</h4>
+        return (
+            <StyledContent>
+                <h4>No Result</h4>
+            </StyledContent>
+        )
     }
     return (
         <>

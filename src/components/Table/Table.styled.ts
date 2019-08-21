@@ -9,10 +9,10 @@ export const TableHeaderItem = styled.a<{ active: boolean }>`
     text-decoration: none;
     text-transform: capitalize;
     color: ${({ theme }) => theme.white};
-    background-color: ${({ theme, active }) => active ? theme.black : theme.darkGrey};
+    background: ${({ theme, active }) => active ? theme.black : theme.darkGrey};
     &:hover {
         cursor: pointer;
-        background-color: ${({ theme }) => theme.black};
+        background: ${({ theme }) => theme.black};
     }
 `;
 
@@ -38,7 +38,7 @@ export const StyledFlexTable = styled.div<{ isEven: boolean }>`
     display: flex;
     flex-flow: row wrap;
     transition: 0.2s;
-    background-color: ${({ isEven, theme }) => (isEven ? theme.greyishLight : theme.white)};
+    background: ${({ isEven, theme }) => (isEven ? theme.greyishLight : theme.white)};
     &.row:nth-child(odd) ${StyledFlexRow} {
         background: ${({ theme }) => theme.greyishLight};
     }
@@ -48,4 +48,9 @@ export const StyledFlexTable = styled.div<{ isEven: boolean }>`
         box-shadow: 0px 2px 2px 2px rgba(0, 0, 0, 0.2);
         cursor: pointer;
     }
+`;
+
+export const StyledContent = styled.div`
+    display: flex;
+    justify-content: center;
 `;

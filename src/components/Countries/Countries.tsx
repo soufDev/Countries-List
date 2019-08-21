@@ -33,9 +33,10 @@ export const Countries: React.FC<RouteComponentProps> = () => {
 
     const paginationHandler = (value: number) => {
         dispatch({ type: 'PAGINATE', payload: {
-            pageNumber: value,
-            data: countries,
-        } });
+                pageNumber: value,
+                data: countries,
+            }
+        });
     };
 
     const headerItemHandler = (e: MouseEventHeadetTitle) => {
@@ -77,8 +78,8 @@ export const Countries: React.FC<RouteComponentProps> = () => {
         })
     }
     return (
-        <WrapperCountries>
-            <WrapperInputs>
+        <WrapperCountries data-testid="wrapper-countries">
+            <WrapperInputs data-testid="wrapper-inputs">
                 <RadioGroup
                     value={currency}
                     items={['all', 'eur']}

@@ -7,7 +7,9 @@ export const TableHeader: React.FC<TableHeaderProps> = ({ currentItem, titleItem
     return (
         <>
             {titleItems.map((item: string, index: number) => (
-                <TableHeaderItem key={index} title={item} onClick={onClick} active={item === currentItem}>{item}</TableHeaderItem>
+                <TableHeaderItem key={index} title={item} onClick={onClick} active={item === currentItem} data-testid="header-item">
+                    {item}
+                </TableHeaderItem>
             ))}
         </>
     );

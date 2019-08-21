@@ -4,6 +4,7 @@ import { Country, ContextState, Dispatch, Action, ProviderProps } from '../../ty
 import { State as fetchState } from '../../types/useFetch';
 import { useAsync, PromiseFn } from 'react-async';
 import { PAGE_SIZE } from '../utils/contants';
+import { FullPageSpinner } from '../Spinner';
 
 
 const InitContext = React.createContext<fetchState<Country[]> | undefined>(undefined);
@@ -33,7 +34,7 @@ const reducer = (state: ContextState, action: Action) => {
         case 'SORT':
             return {
                 ...state,
-                tempCountries: action.payload.countries,
+                tempCountries: state.response,
                 countries: action.payload.countries,
                 currentTableItem: action.payload.headerTableItem,
                 ascSort: !action.payload.ascSort,
@@ -77,7 +78,7 @@ const InitProvider: React.FC<ProviderProps> = ({ children }) => {
 
     if (!firstAttempFinished) {
         if (isLoading) {
-            return <h1>Full Page Loader...</h1>
+            return <FullPageSpinner />
         }
         if (isRejected && error) {
             return (
